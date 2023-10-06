@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ContactForm from './ContactForm/ContactForm';
-import { nanoid } from 'nanoid';
+//import { nanoid } from 'nanoid';
 // import css from 'components/ContactForm/ContactForm.module.css';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
@@ -20,7 +20,7 @@ export class App extends Component {
   };
 
   render() {
-    const { nameUs, number, filter, contacts } = this.state;
+    // const { nameUs, number, filter, contacts } = this.state;
     return (
       <>
         <h1 style={{ marginLeft: '20px' }}>Phonebook</h1>
