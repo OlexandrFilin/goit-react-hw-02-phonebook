@@ -3,7 +3,7 @@ import css from 'components/Filter/Filter.module.css';
 export const Filter = ({ handleFilter, filter }) => {
   return (
     <label htmlFor="" className={css.labelFltr}>
-      Finh contact by name
+      Find contacts by name
       <input
         type="text"
         name="filter"

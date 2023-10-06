@@ -32,8 +32,24 @@ export class App extends Component {
     });
   };
 
+  contactByNameSearch = (nameContact, contacts) => {
+    const find = contacts.find(item => {
+      return item.name === nameContact;
+      // return item.nameUst.trim() === nameContact.trim();
+    });
+    if (find) {
+      return true;
+    }
+    return false;
+  };
+
   handleSubmit = evt => {
     evt.preventDefault();
+
+    if (this.contactByNameSearch(this.state.nameUs, this.state.contacts)) {
+      alert(`${this.state.nameUs} is alredy in conacts`);
+      return;
+    }
 
     this.setState(prevState => {
       prevState.contacts.push({
@@ -61,7 +77,19 @@ export class App extends Component {
   handleFilter = contact => {
     console.log(contact);
   };
+  onDelCont = id => {
+    console.log('id :>> ', id);
+    this.setState(prState => {
+      const withOutDel = prState.contacts.filter(el => {
+        console.log('el.id :>> ', el.id);
+        return el.id !== id;
+      });
 
+      return {
+        contacts: [...withOutDel],
+      };
+    });
+  };
   render() {
     const { nameUs, number, filter } = this.state;
     return (
@@ -79,7 +107,10 @@ export class App extends Component {
           handleFilter={this.handelInputChange}
           filter={filter}
         />
-        <ContactList contacts={this.forInput(filter)} />
+        <ContactList
+          contacts={this.forInput(filter)}
+          onDelCont={this.onDelCont}
+        />
       </>
     );
   }
