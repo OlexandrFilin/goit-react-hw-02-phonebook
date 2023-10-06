@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ContactForm from './ContactForm/ContactForm';
-//import { nanoid } from 'nanoid';
-// import css from 'components/ContactForm/ContactForm.module.css';
+import { nanoid } from 'nanoid';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
 
@@ -19,15 +18,68 @@ export class App extends Component {
     email: '',
   };
 
+  handelInputChange = e => {
+    const { name, value } = e.currentTarget;
+    this.setState({
+      [name]: value,
+    });
+  };
+  resetForm = () => {
+    this.setState({
+      nameUs: '',
+      number: '',
+      email: '',
+    });
+  };
+
+  handleSubmit = evt => {
+    evt.preventDefault();
+
+    this.setState(prevState => {
+      prevState.contacts.push({
+        id: nanoid(),
+        name: this.state.nameUs,
+        number: this.state.number,
+      });
+
+      return {
+        contacts: [...prevState.contacts],
+      };
+    });
+
+    this.resetForm();
+  };
+  forInput = filtr => {
+    if (filtr === '') {
+      return this.state.contacts;
+    } else {
+      return this.state.contacts.filter(el => {
+        return el.name.toLowerCase().includes(filtr.toLowerCase());
+      });
+    }
+  };
+  handleFilter = contact => {
+    console.log(contact);
+  };
+
   render() {
-    // const { nameUs, number, filter, contacts } = this.state;
+    const { nameUs, number, filter } = this.state;
     return (
       <>
         <h1 style={{ marginLeft: '20px' }}>Phonebook</h1>
-        <ContactForm />
+        <ContactForm
+          nameUs={nameUs}
+          number={number}
+          handelInputChange={this.handelInputChange}
+          submitForm={this.handleSubmit}
+        />
         <h2 style={{ marginLeft: '20px' }}>Contacts</h2>
-        <Filter />
-        <ContactList />
+        <Filter
+          style={{ marginLeft: '20px' }}
+          handleFilter={this.handelInputChange}
+          filter={filter}
+        />
+        <ContactList contacts={this.forInput(filter)} />
       </>
     );
   }
