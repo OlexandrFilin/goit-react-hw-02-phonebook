@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ContactForm from './ContactForm/ContactForm';
-import { nanoid } from 'nanoid';
+
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
 
@@ -13,24 +13,19 @@ export class App extends Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
-    nameUs: '',
-    number: '',
-    email: '',
   };
 
-  handelInputChange = e => {
-    const { name, value } = e.currentTarget;
-    this.setState({
-      [name]: value,
-    });
-  };
-  resetForm = () => {
-    this.setState({
-      nameUs: '',
-      number: '',
-      email: '',
-    });
-  };
+  // inputChamngeContr = (val, func) => {
+  //   if (val > 0) {
+  //     console.log('object');
+  //   }
+  // };
+  // resetForm = () => {
+  //   this.setState({
+  //     nameUs: '',
+  //     number: '',
+  //   });
+  // };
 
   contactByNameSearch = (nameContact, contacts) => {
     const find = contacts.find(item => {
@@ -43,28 +38,27 @@ export class App extends Component {
     return false;
   };
 
-  handleSubmit = evt => {
-    evt.preventDefault();
-
-    if (this.contactByNameSearch(this.state.nameUs, this.state.contacts)) {
-      alert(`${this.state.nameUs} is alredy in conacts`);
+  onSubmit = newCont => {
+    if (this.contactByNameSearch(newCont.name, this.state.contacts)) {
+      alert(`${newCont.name} is alredy in conacts`);
       return;
     }
 
     this.setState(prevState => {
-      prevState.contacts.push({
-        id: nanoid(),
-        name: this.state.nameUs,
-        number: this.state.number,
-      });
+      prevState.contacts.push(newCont);
 
       return {
         contacts: [...prevState.contacts],
       };
     });
-
-    this.resetForm();
   };
+  handelInputChange = e => {
+    const { name, value } = e.currentTarget;
+    this.setState({
+      [name]: value,
+    });
+  };
+
   forInput = filtr => {
     if (filtr === '') {
       return this.state.contacts;
@@ -74,14 +68,12 @@ export class App extends Component {
       });
     }
   };
-  handleFilter = contact => {
-    console.log(contact);
-  };
+  // handleFilter = contact => {
+  //   console.log(contact);
+  // };
   onDelCont = id => {
-    console.log('id :>> ', id);
     this.setState(prState => {
       const withOutDel = prState.contacts.filter(el => {
-        console.log('el.id :>> ', el.id);
         return el.id !== id;
       });
 
@@ -91,15 +83,16 @@ export class App extends Component {
     });
   };
   render() {
-    const { nameUs, number, filter } = this.state;
+    // const { nameUs, number, filter } = this.state;
+    const { filter } = this.state;
     return (
       <>
         <h1 style={{ marginLeft: '20px' }}>Phonebook</h1>
         <ContactForm
-          nameUs={nameUs}
-          number={number}
+          // nameUs={nameUs}
+          // number={number}
           handelInputChange={this.handelInputChange}
-          submitForm={this.handleSubmit}
+          submitForm={this.onSubmit}
         />
         <h2 style={{ marginLeft: '20px' }}>Contacts</h2>
         <Filter
