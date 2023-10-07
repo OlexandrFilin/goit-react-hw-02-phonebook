@@ -15,18 +15,6 @@ export class App extends Component {
     filter: '',
   };
 
-  // inputChamngeContr = (val, func) => {
-  //   if (val > 0) {
-  //     console.log('object');
-  //   }
-  // };
-  // resetForm = () => {
-  //   this.setState({
-  //     nameUs: '',
-  //     number: '',
-  //   });
-  // };
-
   contactByNameSearch = (nameContact, contacts) => {
     const find = contacts.find(item => {
       return item.name === nameContact;
@@ -53,6 +41,7 @@ export class App extends Component {
     });
   };
   handelInputChange = e => {
+    // console.log('this ', this);
     const { name, value } = e.currentTarget;
     this.setState({
       [name]: value,
@@ -68,9 +57,7 @@ export class App extends Component {
       });
     }
   };
-  // handleFilter = contact => {
-  //   console.log(contact);
-  // };
+
   onDelCont = id => {
     this.setState(prState => {
       const withOutDel = prState.contacts.filter(el => {
@@ -89,9 +76,7 @@ export class App extends Component {
       <>
         <h1 style={{ marginLeft: '20px' }}>Phonebook</h1>
         <ContactForm
-          // nameUs={nameUs}
-          // number={number}
-          handelInputChange={this.handelInputChange}
+          //  handelInputChange={this.handelInputChange}
           submitForm={this.onSubmit}
         />
         <h2 style={{ marginLeft: '20px' }}>Contacts</h2>

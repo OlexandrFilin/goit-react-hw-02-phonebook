@@ -22,9 +22,6 @@ export default class ContactForm extends Component {
   submitForm = evt => {
     evt.preventDefault();
 
-    // const validName =
-    //   "^[a-zA-Zа-яА-Я]+(([' \\-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$";
-
     this.props.submitForm({
       id: nanoid(),
       name: this.state.nameUs,
@@ -32,9 +29,10 @@ export default class ContactForm extends Component {
     });
     this.resetForm();
   };
+
   render() {
-    const { submitForm, handelInputChange } = this;
-    // const { handelInputChange } = this.props;
+    //console.log(this.props);
+    const { submitForm } = this;
     const { nameUs, number } = this.state;
     return (
       <form action="submit" className={css.frmUser} onSubmit={submitForm}>
@@ -45,8 +43,10 @@ export default class ContactForm extends Component {
             type="text"
             value={nameUs}
             name="nameUs"
-            onChange={handelInputChange}
+            // onChange={this.props.handelInputChange.bind(this)}
+            onChange={this.handelInputChange}
             required
+            pattern="^[a-zA-Zа-яА-Я]+(([' \\-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           />
         </label>
         <label htmlFor="" className={css.labelFrm}>
@@ -56,8 +56,10 @@ export default class ContactForm extends Component {
             name="number"
             value={number}
             className={css.inpUser}
-            onChange={handelInputChange}
+            // onChange={this.props.handelInputChange.bind(this)}
+            onChange={this.handelInputChange}
             required
+            pattern="\\+?\\d{1,4}?[ .\\-\\s]?\\(?\\d{1,3}?\\)?[ .\\-\\s]?\\d{1,4}[ .\\-\\s]?\\d{1,4}[ .\\-\\s]?\\d{1,9}"
           />
         </label>
         <button className={css.btnSubmit}>Add contact</button>
