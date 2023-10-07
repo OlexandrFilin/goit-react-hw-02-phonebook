@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid';
 
 export default class ContactForm extends Component {
   state = {
-    nameUs: '',
+    name: '',
     number: '',
   };
   handelInputChange = e => {
@@ -15,7 +15,7 @@ export default class ContactForm extends Component {
   };
   resetForm = () => {
     this.setState({
-      nameUs: '',
+      name: '',
       number: '',
     });
   };
@@ -24,7 +24,7 @@ export default class ContactForm extends Component {
 
     this.props.submitForm({
       id: nanoid(),
-      name: this.state.nameUs,
+      name: this.state.name,
       number: this.state.number,
     });
     this.resetForm();
@@ -33,23 +33,23 @@ export default class ContactForm extends Component {
   render() {
     //console.log(this.props);
     const { submitForm } = this;
-    const { nameUs, number } = this.state;
+    const { name, number } = this.state;
     return (
-      <form action="submit" className={css.frmUser} onSubmit={submitForm}>
-        <label htmlFor="" className={css.labelFrm}>
+      <form className={css.frmUser} onSubmit={submitForm}>
+        <label className={css.labelFrm}>
           Name
           <input
             className={css.inpUser}
             type="text"
-            value={nameUs}
-            name="nameUs"
+            value={name}
+            name="name"
             // onChange={this.props.handelInputChange.bind(this)}
             onChange={this.handelInputChange}
             required
             pattern="^[a-zA-Zа-яА-Я]+(([' \\-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           />
         </label>
-        <label htmlFor="" className={css.labelFrm}>
+        <label className={css.labelFrm}>
           Number
           <input
             type="tel"
@@ -59,10 +59,11 @@ export default class ContactForm extends Component {
             // onChange={this.props.handelInputChange.bind(this)}
             onChange={this.handelInputChange}
             required
-            pattern="\\+?\\d{1,4}?[ .\\-\\s]?\\(?\\d{1,3}?\\)?[ .\\-\\s]?\\d{1,4}[ .\\-\\s]?\\d{1,4}[ .\\-\\s]?\\d{1,9}"
           />
         </label>
-        <button className={css.btnSubmit}>Add contact</button>
+        <button type="submit" className={css.btnSubmit}>
+          Add contact
+        </button>
       </form>
     );
   }

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ContactForm from './ContactForm/ContactForm';
-
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
 
@@ -14,63 +13,57 @@ export class App extends Component {
     ],
     filter: '',
   };
-
+  //перевірка чи є контакт в списку
   contactByNameSearch = (nameContact, contacts) => {
-    const find = contacts.find(item => {
+    return contacts.find(item => {
       return item.name === nameContact;
-      // return item.nameUst.trim() === nameContact.trim();
     });
-    if (find) {
-      return true;
-    }
-    return false;
   };
-
+  //відправка форми з перевіркою існування контаку в списку
   onSubmit = newCont => {
     if (this.contactByNameSearch(newCont.name, this.state.contacts)) {
       alert(`${newCont.name} is alredy in conacts`);
       return;
     }
-
     this.setState(prevState => {
-      prevState.contacts.push(newCont);
-
       return {
-        contacts: [...prevState.contacts],
+        contacts: [...prevState.contacts, newCont],
       };
     });
   };
+
   handelInputChange = e => {
-    // console.log('this ', this);
     const { name, value } = e.currentTarget;
     this.setState({
       [name]: value,
     });
   };
-
-  forInput = filtr => {
+  //отримуэмо контакти відфільтровані по данним в інпуті
+  getFilteredContacts = filtr => {
+    const { contacts } = this.state;
     if (filtr === '') {
-      return this.state.contacts;
+      return contacts;
     } else {
-      return this.state.contacts.filter(el => {
+      return contacts.filter(el => {
         return el.name.toLowerCase().includes(filtr.toLowerCase());
       });
     }
   };
-
-  onDelCont = id => {
-    this.setState(prState => {
-      const withOutDel = prState.contacts.filter(el => {
-        return el.id !== id;
-      });
-
-      return {
-        contacts: [...withOutDel],
-      };
+  getNewListContacts = (conacts, idForRemove) => {
+    return conacts.filter(el => {
+      return el.id !== idForRemove;
     });
   };
+  onRemoveContact = idForRem => {
+    //отримуємо список контактів без контакту З ID = idForRem, що треба видалити
+    const withOutDel = this.getNewListContacts(this.state.contacts, idForRem);
+
+    this.setState({
+      contacts: [...withOutDel],
+    });
+  };
+
   render() {
-    // const { nameUs, number, filter } = this.state;
     const { filter } = this.state;
     return (
       <>
@@ -86,8 +79,8 @@ export class App extends Component {
           filter={filter}
         />
         <ContactList
-          contacts={this.forInput(filter)}
-          onDelCont={this.onDelCont}
+          contacts={this.getFilteredContacts(filter)}
+          onRemoveContact={this.onRemoveContact}
         />
       </>
     );

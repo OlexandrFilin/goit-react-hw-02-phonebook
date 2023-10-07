@@ -2,7 +2,7 @@ import css from 'components/Filter/Filter.module.css';
 
 export const Filter = ({ handleFilter, filter }) => {
   return (
-    <label htmlFor="" className={css.labelFltr}>
+    <label className={css.labelFltr}>
       Find contacts by name
       <input
         type="text"
