@@ -10,6 +10,7 @@ export const Filter = ({ handleFilter, filter }) => {
         value={filter}
         className={css.inpfiltr}
         onChange={handleFilter}
+        placeholder="Filter by name"
       />
     </label>
   );

@@ -43,6 +43,7 @@ export default class ContactForm extends Component {
             type="text"
             value={name}
             name="name"
+            placeholder="Name"
             // onChange={this.props.handelInputChange.bind(this)}
             onChange={this.handelInputChange}
             required
@@ -58,6 +59,7 @@ export default class ContactForm extends Component {
             className={css.inpUser}
             // onChange={this.props.handelInputChange.bind(this)}
             onChange={this.handelInputChange}
+            placeholder="Phone number"
             required
           />
         </label>
